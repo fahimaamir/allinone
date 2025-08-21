@@ -146,8 +146,20 @@ with st.expander("Expander 00000000000000000001: Click to reveal content"):
                 data_return_mode=DataReturnMode.FILTERED_AND_SORTED,
                 fit_columns_on_grid_load=True,
                 width =2900 ,
-                reload_data=False
+                reload_data=False,
+                enable_enterprise_modules=True,
+                
+                
             )
+        
+        
+            
+        
+        
+        
+#        fit_columns_on_grid_load=False,
+ #       header_checkbox_selection_filtered_only=True,
+  #      use_checkbox=True
 
 
         #if st.button('Check availability'):
@@ -252,19 +264,22 @@ with st.expander("Expander 111111111111111111111111111111: Click to reveal conte
 with st.expander("Expander 222222222222222222222222222 ----------: Click to reveal content"):
     mfa2 = pd.DataFrame(data)
     gb = GridOptionsBuilder.from_dataframe(mfa2)
+ 
+    for column in mfa2.columns:
+                gb.configure_column(column, filter=True)
+
     gb.configure_selection(
             selection_mode="multiple",
             use_checkbox=True,
             pre_selected_rows=None,  # <-- Set to manually persist checkbox state
         )
-    for column in mfa2.columns:
-                gb.configure_column(column, filter=True)
 
     gridOptions = gb.build()
     mfa = AgGrid(
             mfa2,
             gridOptions=gridOptions,
             update_mode=GridUpdateMode.GRID_CHANGED,
+            enable_enterprise_modules=True,
             columns_auto_size_mode=ColumnsAutoSizeMode.FIT_CONTENTS,
             data_return_mode=DataReturnMode.FILTERED   # <-- Gets filtered data, but not filters applied to columns
         )
